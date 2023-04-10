@@ -5,13 +5,13 @@ import {
 } from '@aws-sdk/client-cloudwatch-logs';
 import {Handler} from 'aws-lambda';
 
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async () => {
   const client = new CloudWatchLogsClient({region: 'us-east-1'});
 
   const describeLogGroupsResponse = await client.send(
     new DescribeLogGroupsCommand({})
   );
-  describeLogGroupsResponse.logGroups?.forEach(logGroup => {
+  describeLogGroupsResponse.logGroups?.forEach(async logGroup => {
     const putRetentionPolicyCommand = new PutRetentionPolicyCommand({
       logGroupName: logGroup.logGroupName,
       retentionInDays: 7,
@@ -20,6 +20,6 @@ export const handler: Handler = async (event, context) => {
     console.log(
       `Updating retention policy for log group ${logGroup.logGroupName} to 7 days.`
     );
-    client.send(putRetentionPolicyCommand);
+    await client.send(putRetentionPolicyCommand);
   });
 };
