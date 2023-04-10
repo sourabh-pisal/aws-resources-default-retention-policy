@@ -5,16 +5,18 @@
     "aws-resources-default-retention-policy": "bin/aws-resources-default-retention-policy.js"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
     "cdk": "cdk",
+    "test": "jest",
     "lint": "gts lint",
-    "clean": "gts clean",
+    "clean": "gts clean && rm -rf cdk.out",
     "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
+    "watch": "tsc -w",
+    "build": "npm run compile",
+    "synth": "npm run cdk synth",
+    "deploy": "npm run cdk deploy",
+    "prebuild": "npm run test",
+    "postbuild": "npm run synth",
     "posttest": "npm run lint"
   },
   "devDependencies": {

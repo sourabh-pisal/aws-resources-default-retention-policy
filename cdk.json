@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/aws-resources-default-retention-policy.ts",
+  "app": "node build/bin/aws-resources-default-retention-policy.js",
   "watch": {
     "include": [
       "**"
