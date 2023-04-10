@@ -1,6 +1,6 @@
-import { Duration, Stack, StackProps } from 'aws-cdk-lib';
-import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
-import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
+import {Duration, Stack, StackProps} from 'aws-cdk-lib';
+import {Rule, Schedule} from 'aws-cdk-lib/aws-events';
+import {LambdaFunction} from 'aws-cdk-lib/aws-events-targets';
 import {
   Architecture,
   Code,
@@ -8,11 +8,11 @@ import {
   Function,
   Runtime,
 } from 'aws-cdk-lib/aws-lambda';
-import { SnsDestination } from 'aws-cdk-lib/aws-lambda-destinations';
-import { Platform, SigningProfile } from 'aws-cdk-lib/aws-signer';
-import { Topic } from 'aws-cdk-lib/aws-sns';
-import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
-import { Construct } from 'constructs';
+import {SnsDestination} from 'aws-cdk-lib/aws-lambda-destinations';
+import {Platform, SigningProfile} from 'aws-cdk-lib/aws-signer';
+import {Topic} from 'aws-cdk-lib/aws-sns';
+import {EmailSubscription} from 'aws-cdk-lib/aws-sns-subscriptions';
+import {Construct} from 'constructs';
 import path = require('path');
 
 export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
@@ -45,7 +45,9 @@ export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
         handler: 'log-group-retention-policy-updater.handler',
         code: Code.fromAsset(path.join(__dirname, '../lambda')),
         timeout: Duration.minutes(5),
-        onFailure: new SnsDestination(logGroupRetentionPolicyUpdaterFailureTopic),
+        onFailure: new SnsDestination(
+          logGroupRetentionPolicyUpdaterFailureTopic
+        ),
       }
     );
 
