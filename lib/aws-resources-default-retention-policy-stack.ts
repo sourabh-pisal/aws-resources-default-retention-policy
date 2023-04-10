@@ -1,6 +1,7 @@
-import {Duration, Stack, StackProps} from 'aws-cdk-lib';
+import {Duration, Fn, Stack, StackProps} from 'aws-cdk-lib';
 import {Rule, Schedule} from 'aws-cdk-lib/aws-events';
 import {LambdaFunction} from 'aws-cdk-lib/aws-events-targets';
+import {Policy, PolicyStatement} from 'aws-cdk-lib/aws-iam';
 import {
   Architecture,
   Code,
@@ -49,6 +50,19 @@ export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
           logGroupRetentionPolicyUpdaterFailureTopic
         ),
       }
+    );
+
+    logGroupRetentionPolicyUpdater.role?.attachInlinePolicy(
+      new Policy(this, 'UpdateRetentionPolicy', {
+        statements: [
+          new PolicyStatement({
+            actions: ['logs:DescribeLogGroups', 'logs:PutRetentionPolicy'],
+            resources: [
+              `arn:aws:logs:*:${Fn.sub('AWS::AccountId')}:log-group:*`,
+            ],
+          }),
+        ],
+      })
     );
 
     const rule = new Rule(this, 'LogGroupRetentionPolicyUpdaterRule', {

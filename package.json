@@ -20,6 +20,7 @@
     "posttest": "npm run lint"
   },
   "devDependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.309.0",
     "@types/aws-lambda": "^8.10.114",
     "@types/jest": "^29.4.0",
     "@types/node": "18.14.6",
