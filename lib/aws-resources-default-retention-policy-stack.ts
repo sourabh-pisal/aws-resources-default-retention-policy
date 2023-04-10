@@ -1,4 +1,4 @@
-import {Duration, Stack, StackProps} from 'aws-cdk-lib';
+import {Duration, Fn, Stack, StackProps} from 'aws-cdk-lib';
 import {Rule, Schedule} from 'aws-cdk-lib/aws-events';
 import {LambdaFunction} from 'aws-cdk-lib/aws-events-targets';
 import {Policy, PolicyStatement} from 'aws-cdk-lib/aws-iam';
@@ -58,7 +58,9 @@ export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
           new PolicyStatement({
             actions: ['logs:DescribeLogGroups', 'logs:PutRetentionPolicy'],
             resources: [
-              'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*',
+              Fn.sub(
+                'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*'
+              ),
             ],
           }),
         ],
