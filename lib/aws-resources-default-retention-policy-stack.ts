@@ -57,7 +57,7 @@ export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
         statements: [
           new PolicyStatement({
             actions: ['logs:DescribeLogGroups', 'logs:PutRetentionPolicy'],
-            resources: ['arn:aws:logs:*:${AWS::AccountId}:log-group:*'],
+            resources: ['arn:aws:logs:*:*:log-group:*'],
           }),
         ],
       })

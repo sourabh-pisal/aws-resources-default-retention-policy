@@ -17,6 +17,9 @@ export const handler: Handler = async (event, context) => {
       retentionInDays: 7,
     });
 
+    console.log(
+      `Updating retention policy for log group ${logGroup.logGroupName} to 7 days.`
+    );
     client.send(putRetentionPolicyCommand);
   });
 };
