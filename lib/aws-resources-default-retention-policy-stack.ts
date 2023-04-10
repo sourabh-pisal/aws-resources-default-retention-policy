@@ -52,18 +52,16 @@ export class AwsResourcesDefaultRetentionPolicyStack extends Stack {
       }
     );
 
-    // logGroupRetentionPolicyUpdater.role?.attachInlinePolicy(
-    //   new Policy(this, 'UpdateRetentionPolicy', {
-    //     statements: [
-    //       new PolicyStatement({
-    //         actions: ['logs:DescribeLogGroups', 'logs:PutRetentionPolicy'],
-    //         resources: [
-    //           `arn:aws:logs:*:${Fn.sub('AWS::AccountId')}:log-group:*`,
-    //         ],
-    //       }),
-    //     ],
-    //   })
-    // );
+    logGroupRetentionPolicyUpdater.role?.attachInlinePolicy(
+      new Policy(this, 'UpdateRetentionPolicy', {
+        statements: [
+          new PolicyStatement({
+            actions: ['logs:DescribeLogGroups', 'logs:PutRetentionPolicy'],
+            resources: ['arn:aws:logs:*:${AWS::AccountId}:log-group:*'],
+          }),
+        ],
+      })
+    );
 
     const rule = new Rule(this, 'LogGroupRetentionPolicyUpdaterRule', {
       schedule: Schedule.rate(Duration.days(7)),
