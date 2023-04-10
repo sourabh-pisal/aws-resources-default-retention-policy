@@ -1,0 +1,35 @@
+{
+  "name": "aws-resources-default-retention-policy",
+  "version": "0.1.0",
+  "bin": {
+    "aws-resources-default-retention-policy": "bin/aws-resources-default-retention-policy.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "@types/node": "18.14.6",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.0.5",
+    "aws-cdk": "2.73.0",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.9.5",
+    "gts": "^3.1.1"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.73.0",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.21"
+  }
+}
