@@ -11,15 +11,25 @@ export const handler: Handler = async () => {
   const describeLogGroupsResponse = await client.send(
     new DescribeLogGroupsCommand({})
   );
-  describeLogGroupsResponse.logGroups?.forEach(async logGroup => {
-    const putRetentionPolicyCommand = new PutRetentionPolicyCommand({
-      logGroupName: logGroup.logGroupName,
-      retentionInDays: 7,
-    });
 
-    console.log(
-      `Updating retention policy for log group ${logGroup.logGroupName} to 7 days.`
+  if (describeLogGroupsResponse.logGroups) {
+    const putRetentionPolicyPromises = describeLogGroupsResponse.logGroups.map(
+      async logGroup => {
+        const putRetentionPolicyCommand = new PutRetentionPolicyCommand({
+          logGroupName: logGroup.logGroupName,
+          retentionInDays: 7,
+        });
+
+        console.log(
+          `Updating retention policy for log group ${logGroup.logGroupName} to 7 days.`
+        );
+        return await client.send(putRetentionPolicyCommand);
+      }
     );
-    await client.send(putRetentionPolicyCommand);
-  });
+
+    await Promise.all(putRetentionPolicyPromises);
+    console.log('Successfully updated retention policy.');
+  } else {
+    console.log('No log group found.');
+  }
 };
