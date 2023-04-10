@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import {
+  Architecture,
   Code,
   CodeSigningConfig,
   Function,
@@ -24,6 +25,7 @@ export class AwsResourcesDefaultRetentionPolicyStack extends cdk.Stack {
     new Function(this, 'LogGroupRetentionPolicyUpdater', {
       codeSigningConfig,
       runtime: Runtime.NODEJS_18_X,
+      architecture: Architecture.ARM_64,
       handler: 'log-group-retention-policy-updater.handler',
       code: Code.fromAsset(path.join(__dirname, '../lambda')),
     });
